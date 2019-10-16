@@ -1,0 +1,420 @@
+[
+    {
+        "id": 125,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:35:00Z",
+        "words" :
+        [
+            {
+                "word": "He",
+                "category": 0,
+            },
+            {
+                "word": "fainted",
+                "category": 2,
+            },
+            {
+                "word": "with",
+                "category": 0,
+            },
+            {
+                "word": "hunger",
+                "category": 1,
+            },
+            {
+                "word": "and",
+                "category": 0,
+            },
+            {
+                "word": "fatigue",
+                "category": 2,
+            },
+            {
+                "word": ",",
+                "category": -1,
+            },
+            {
+                "word": "but",
+                "category": 0,
+            },
+            {
+                "word": "came to",
+                "category": 2,
+            },
+            {
+                "word": "after a while.",
+                "category": 2,
+            }
+        ],
+        "japanese" : "彼は空腹と疲労で気を失ったが、しばらくして意識を取り戻した"
+    },
+    {
+        "id": 126,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "The",
+                "category": 0,
+            },
+            {
+                "word": "auditorium",
+                "category": 2,
+            },
+            {
+                "word": "was",
+                "category": 0,
+            },
+            {
+                "word": "empty",
+                "category": 1,
+            },
+            {
+                "word": "except for",
+                "category": 1,
+            },
+            {
+                "word": "a single piece of",
+                "category": 0,
+            },
+            {
+                "word": "furniture.",
+                "category": 1,
+            }
+        ],
+        "japanese" : "たった一つの家具を除けば、講堂はがらんどうだった"
+    },
+    {
+        "id": 127 ,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "Any",
+                "category": 0,
+            },
+            {
+                "word": "apartment",
+                "category": 0,
+            },
+            {
+                "word": "will do",
+                "category": 2,
+            },
+            {
+                "word": "as long as",
+                "category": 1,
+            },
+            {
+                "word": "the rent",
+                "category": 1,
+            },
+            {
+                "word": "is low.",
+                "category": 0,
+            },
+            {
+                "word": "I",
+                "category": 0,
+            },
+            {
+                "word": "'m",
+                "category": 3,
+            },
+            {
+                "word": "not",
+                "category": 0,
+            },
+            {
+                "word": "particular about",
+                "category": 2,
+            },
+            {
+                "word": "it.",
+                "category": 0,
+            }
+        ],
+        "japanese" : "家賃が安ければ、どんなマンションでも構いません。こだわりはありませんから"
+    },
+    {
+        "id": 128,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "His",
+                "category": 0,
+            },
+            {
+                "word": "sixty-year-old",
+                "category": 1,
+            },
+            {
+                "word": "cousin",
+                "category": 0,
+            },
+            {
+                "word": "inherited",
+                "category": 1,
+            },
+            {
+                "word": "a piece of",
+                "category": 0,
+            },
+            {
+                "word": "real estate",
+                "category": 1,
+            },
+            {
+                "word": "by a lake.",
+                "category": 0,
+            }
+        ],
+        "japanese" : "彼の60歳のいとこが湖畔の不動産を相続した"
+    },
+    {
+        "id": 129,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "So much for",
+                "category": 2,
+            },
+            {
+                "word": "small talk",
+                "category": 2,
+            },
+            {
+                "word": ".",
+                "category": -1,
+            },
+            {
+                "word": "Let's",
+                "category": 0,
+            },
+            {
+                "word": "get down to",
+                "category": 2,
+            },
+            {
+                "word": "business.",
+                "category": 0,
+            }
+        ],
+        "japanese" : "雑談はこの辺にして、本題に入りましょう"
+    },
+    {
+        "id": 130,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "Lucy",
+                "category": 0,
+            },
+            {
+                "word": "resented",
+                "category": 2,
+            },
+            {
+                "word": "the",
+                "category": 0,
+            },
+            {
+                "word": "aggressive",
+                "category": 1,
+            },
+            {
+                "word": "salesman trying to",
+                "category": 0,
+            },
+            {
+                "word": "make her sign",
+                "category": 1,
+            },
+            {
+                "word": "the contract.",
+                "category": 0,
+            }
+        ],
+        "japanese" : "ルーシーは、契約書にサインさせようとする強引な販売員に腹を立てた"
+    },
+    {
+        "id": 131,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "There are",
+                "category": 0,
+            },
+            {
+                "word": "a number of",
+                "category": 1,
+            },
+            {
+                "word": "factors",
+                "category": 1,
+            },
+            {
+                "word": "discouraging",
+                "category": 2,
+            },
+            {
+                "word": "us",
+                "category": 0,
+            },
+            {
+                "word": "from",
+                "category": 2,
+            },
+            {
+                "word": "invest",
+                "category": 1,
+            },
+            {
+                "word": "ing",
+                "category": 3,
+            },
+            {
+                "word": "in",
+                "category": 1,
+            },
+            {
+                "word": "stocks.",
+                "category": 1,
+            },
+        ],
+        "japanese" : "私たちの株式投資への意欲をそぐような要因がかなりある"
+    },
+    {
+        "id": 132,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "Japan",
+                "category": 0,
+            },
+            {
+                "word": "imports",
+                "category": 1,
+            },
+            {
+                "word": "various",
+                "category": 1,
+            },
+            {
+                "word": "raw materials",
+                "category": 2,
+            },
+            {
+                "word": "and",
+                "category": 0,
+            },
+            {
+                "word": "exports",
+                "category": 1,
+            },
+            {
+                "word": "manufactured goods.",
+                "category": 0,
+            },
+        ],
+        "japanese" : "日本は様々な原料を輸入し、工業製品を輸出している"
+    },
+    {
+        "id": 133,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "In the course of",
+                "category": 2,
+            },
+            {
+                "word": "its",
+                "category": 0,
+            },
+            {
+                "word": "economic development",
+                "category": 1,
+            },
+            {
+                "word": "Japan has",
+                "category": 0,
+            },
+            {
+                "word": "abandoned",
+                "category": 1,
+            },
+            {
+                "word": "its",
+                "category": 0,
+            },
+            {
+                "word": "traditional values.",
+                "category": 1,
+            },
+        ],
+        "japanese" : "経済発展の過程で、日本はその伝統的価値観を捨ててきた"
+    },
+    {
+        "id": 134,
+        "book" : 0,
+        "section" : 10,
+        "status" : 0,
+        "lastAnswerDate" : "2019-10-12T23:40:00Z",
+        "words" :
+        [
+            {
+                "word": "The world",
+                "category": 0,
+            },
+            {
+                "word": "is faced with",
+                "category": 2,
+            },
+            {
+                "word": "an",
+                "category": 0,
+            },
+            {
+                "word": "unprecedented",
+                "category": 2,
+            },
+            {
+                "word": "crisis.",
+                "category": 1,
+            },
+        ],
+        "japanese" : "世界はかつてない危機に直面している"
+    },
+]

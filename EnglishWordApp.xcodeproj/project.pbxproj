@@ -24,6 +24,12 @@
 		1B3C36F423549311000456BF /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C36F323549311000456BF /* NotificationView.swift */; };
 		1B3C36F623549312000456BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C36F523549312000456BF /* Assets.xcassets */; };
 		1B3C36F923549312000456BF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C36F823549312000456BF /* Preview Assets.xcassets */; };
+		1B3C373C23549419000456BF /* Sentences.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C373B23549419000456BF /* Sentences.geojson */; };
+		1B3C3740235494EF000456BF /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C373E235494EF000456BF /* Data.swift */; };
+		1B3C3741235494EF000456BF /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C373F235494EF000456BF /* Sentence.swift */; };
+		1B3C374223549591000456BF /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C373E235494EF000456BF /* Data.swift */; };
+		1B3C374323549595000456BF /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C373F235494EF000456BF /* Sentence.swift */; };
+		1B3C37442354959C000456BF /* Sentences.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C373B23549419000456BF /* Sentences.geojson */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +97,9 @@
 		1B3C36F823549312000456BF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1B3C36FA23549312000456BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B3C36FB23549312000456BF /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		1B3C373B23549419000456BF /* Sentences.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sentences.geojson; sourceTree = "<group>"; };
+		1B3C373E235494EF000456BF /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		1B3C373F235494EF000456BF /* Sentence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +123,7 @@
 		1B3C36BA23549310000456BF = {
 			isa = PBXGroup;
 			children = (
+				1B3C373A23549419000456BF /* Resources */,
 				1B3C36C523549310000456BF /* EnglishWordApp */,
 				1B3C36DB23549311000456BF /* EnglishWordApp WatchKit App */,
 				1B3C36EA23549311000456BF /* EnglishWordApp WatchKit Extension */,
@@ -134,6 +144,7 @@
 		1B3C36C523549310000456BF /* EnglishWordApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B3C373D235494EF000456BF /* Models */,
 				1B3C36C623549310000456BF /* AppDelegate.swift */,
 				1B3C36C823549310000456BF /* SceneDelegate.swift */,
 				1B3C36CA23549310000456BF /* ContentView.swift */,
@@ -185,6 +196,23 @@
 				1B3C36F823549312000456BF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1B3C373A23549419000456BF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1B3C373B23549419000456BF /* Sentences.geojson */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1B3C373D235494EF000456BF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B3C373E235494EF000456BF /* Data.swift */,
+				1B3C373F235494EF000456BF /* Sentence.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3C373C23549419000456BF /* Sentences.geojson in Resources */,
 				1B3C36D323549311000456BF /* LaunchScreen.storyboard in Resources */,
 				1B3C36D023549311000456BF /* Preview Assets.xcassets in Resources */,
 				1B3C36CD23549311000456BF /* Assets.xcassets in Resources */,
@@ -310,6 +339,7 @@
 			files = (
 				1B3C36F923549312000456BF /* Preview Assets.xcassets in Resources */,
 				1B3C36F623549312000456BF /* Assets.xcassets in Resources */,
+				1B3C37442354959C000456BF /* Sentences.geojson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +352,9 @@
 			files = (
 				1B3C36C723549310000456BF /* AppDelegate.swift in Sources */,
 				1B3C36C923549310000456BF /* SceneDelegate.swift in Sources */,
+				1B3C3741235494EF000456BF /* Sentence.swift in Sources */,
 				1B3C36CB23549310000456BF /* ContentView.swift in Sources */,
+				1B3C3740235494EF000456BF /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,9 +363,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B3C36EE23549311000456BF /* HostingController.swift in Sources */,
+				1B3C374223549591000456BF /* Data.swift in Sources */,
 				1B3C36EC23549311000456BF /* ContentView.swift in Sources */,
 				1B3C36F223549311000456BF /* NotificationController.swift in Sources */,
 				1B3C36F023549311000456BF /* ExtensionDelegate.swift in Sources */,
+				1B3C374323549595000456BF /* Sentence.swift in Sources */,
 				1B3C36F423549311000456BF /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
