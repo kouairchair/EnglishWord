@@ -13,13 +13,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            List(sentences, id: \.id) { sentence in
-                self.sentenceView(sentence: sentence)
-                    .gesture(TapGesture(count: 2).exclusively(before: TapGesture(count: 1)).onEnded{ value in
+            List {
+                ForEach(sentences, id: \.id) { sentence in
+                    self.sentenceView(sentence: sentence)
+                        .gesture(TapGesture(count: 2).exclusively(before: TapGesture(count: 1)).onEnded{ value in
                             switch value {
                                 case .first():
                                     // if double tap
-                                    print("double tapped")
                                     if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
                                         let mode = sentence.mode ?? .Japanese
                                         if (mode == .Japanese) {
@@ -33,13 +33,30 @@ struct ContentView: View {
                                         let mode = sentence.mode ?? .Japanese
                                         self.sentences[row].mode = mode == .Japanese ? .EnglishQuiz : .Japanese
                                     }
-                            }
+                        }
                     })
+                }.onDelete(perform: delete)
             }
         }
     }
     
-    func sentenceView(sentence: Sentence) -> AnyView {
+    func delete(at offsets: IndexSet) {
+        offsets.forEach { index in
+            if (sentences[index].mode != .none) {
+                sentences[index].lastAnsDate = Date()
+            }
+            
+            if (sentences[index].mode == .Japanese || sentences[index].mode == .EnglishQuiz) {
+                sentences[index].status = .HitOnce
+            }
+            else if (sentences[index].mode == .English) {
+                sentences[index].status = .Master
+            }
+        }
+//        sentences.remove(atOffsets: offsets)
+    }
+    
+    func sentenceView(sentence: Sentence) -> AnyView? {            
         var result = Text("")
         let mode = sentence.mode ?? .Japanese
         if (mode == .Japanese) {
@@ -91,6 +108,8 @@ struct ContentView: View {
                 }
             }
         }
+        
+        store(sentences: sentences)
 
         return AnyView(
             HStack {
