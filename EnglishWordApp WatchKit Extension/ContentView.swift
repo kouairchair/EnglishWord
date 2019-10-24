@@ -9,23 +9,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var sentences: [Sentence]
+//    @State var sentences: [Sentence]
     
     var body: some View {
         VStack
         {
-            List(sentences, id: \.id) { sentence in
+            List(InitialData.sentences, id: \.id) { sentence in
                 self.sentenceView(sentence: sentence)
                     .gesture(SimultaneousGesture(
                         TapGesture().onEnded({
-                            if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
+                            if let row = InitialData.sentences.firstIndex(where: {$0.id == sentence.id}) {
                                 let mode = sentence.mode ?? .Japanese
-                                self.sentences[row].mode = mode == .Japanese ? .English : .Japanese
+                                InitialData.sentences[row].mode = mode == .Japanese ? .English : .Japanese
                             }
                         }),
                         TapGesture(count: 2).onEnded({_ in
-                            if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
-                                self.sentences[row].id = self.sentences[row].id - 1
+                            if let row = InitialData.sentences.firstIndex(where: {$0.id == sentence.id}) {
+                                InitialData.sentences[row].id = InitialData.sentences[row].id - 1
                             }
                     })))
             }
@@ -60,6 +60,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(sentences: sentences)
+        ContentView()
     }
 }

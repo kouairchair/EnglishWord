@@ -7,9 +7,21 @@
 //
 
 import Foundation
+import CoreData
 
-struct Constants {
+public struct Constants {
     enum Data : String {
         case sentence
+    }
+    static var _context: NSManagedObjectContext?
+    static var context: NSManagedObjectContext {
+        get {
+            guard let unwrappedContext = _context else
+                { fatalError("Unable to read managed object context.") }
+            return unwrappedContext
+        }
+        set(value) {
+            _context = value
+        }
     }
 }

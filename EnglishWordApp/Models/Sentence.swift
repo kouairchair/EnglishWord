@@ -9,8 +9,8 @@
 import SwiftUI
 import CoreLocation
 
-struct Sentence: Hashable, Codable, Identifiable {
-    var id: Int
+public struct Sentence: Hashable, Codable, Identifiable {
+    public var id: Int
     var book: Int
     var section: Int
     var status: Status

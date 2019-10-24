@@ -9,29 +9,54 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var sentences: [Sentence]
+//    @State var sentences: [Vocabulary]
+    @FetchRequest(fetchRequest: Vocabulary.allVocabularyFetchReq()) var sentences: FetchedResults<Vocabulary>
+    @State private var showingAdvancedOptions = false
+    @State private var newSentence = ""
     
     var body: some View {
         VStack {
+            Toggle(isOn: $showingAdvancedOptions) {
+                Text("Registration Mode").padding(20)
+            }.frame(height: 30)
+
+            if showingAdvancedOptions {
+                List {
+                    Section(header: Text("New Sentence")) {
+                        HStack {
+                            TextField("New Sentence", text: self.$newSentence)
+                            Button(action: {
+                                print("")
+                            }){
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.green)
+                                    .imageScale(.large)
+                            }
+                        }
+                    }
+                }.frame(height: 200)
+            }
             List {
-                ForEach(sentences, id: \.id) { sentence in
+                ForEach(self.sentences, id: \.self) { sentence in
                     self.sentenceView(sentence: sentence)
                         .gesture(TapGesture(count: 2).exclusively(before: TapGesture(count: 1)).onEnded{ value in
                             switch value {
                                 case .first():
                                     // if double tap
                                     if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
-                                        let mode = sentence.mode ?? .Japanese
+                                        let mode = sentence._mode
                                         if (mode == .Japanese) {
                                             return
                                         }
-                                        self.sentences[row].mode = mode == .English ? .EnglishQuiz : .English
+                                        let toMode: Vocabulary.Mode = mode == .English ? .EnglishQuiz : .English
+                                        self.sentences[row].editMode(toMode: toMode)
                                     }
                                 case .second():
                                     // if single tap
                                     if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
-                                        let mode = sentence.mode ?? .Japanese
-                                        self.sentences[row].mode = mode == .Japanese ? .EnglishQuiz : .Japanese
+                                        let mode = sentence._mode
+                                        let toMode: Vocabulary.Mode = mode == .Japanese ? .EnglishQuiz : .Japanese
+                                        self.sentences[row].editMode(toMode: toMode)
                                     }
                         }
                     })
@@ -42,74 +67,75 @@ struct ContentView: View {
     
     func delete(at offsets: IndexSet) {
         offsets.forEach { index in
-            if (sentences[index].mode != .none) {
-                sentences[index].lastAnsDate = Date()
+            if (sentences[index]._mode == .Japanese || sentences[index]._mode == .EnglishQuiz) {
+                sentences[index]._status = .HitOnce
             }
-            
-            if (sentences[index].mode == .Japanese || sentences[index].mode == .EnglishQuiz) {
-                sentences[index].status = .HitOnce
-            }
-            else if (sentences[index].mode == .English) {
-                sentences[index].status = .Master
+            else if (sentences[index]._mode == .English) {
+                sentences[index]._status = .Master
             }
         }
 //        sentences.remove(atOffsets: offsets)
     }
     
-    func sentenceView(sentence: Sentence) -> AnyView? {            
+    func sentenceView(sentence: Vocabulary) -> AnyView? {
         var result = Text("")
-        let mode = sentence.mode ?? .Japanese
+        let mode = sentence._mode
         if (mode == .Japanese) {
-            result = Text(sentence.japanese)
+            result = Text(sentence.japanese ?? "")
         }
         else {
-            sentence.words.forEach { word in
-                if (mode == .English) {
-                    switch(word.category) {
-                        case .Easy:
-                            result = result + Text(" \(word.word)")
-                        case .JustInCase:
-                            result = result + Text(" \(word.word)").foregroundColor(.blue)
-                        case .Hard:
-                            result = result + Text(" \(word.word)").foregroundColor(.blue).bold()
-                        case .Punctuation:
-                            result = result + Text("\(word.word)")
-                        case .Special:
-                            result = result + Text("\(word.word)").foregroundColor(.blue)
+            if let words = sentence.fetchChildren() {
+                words.forEach { word in
+                    if (mode == .English) {
+                        switch(word._category) {
+                            case .Easy:
+                                result = result + Text(" \(word._word)")
+                            case .JustInCase:
+                                result = result + Text(" \(word._word)").foregroundColor(.blue)
+                            case .Hard:
+                                result = result + Text(" \(word._word)").foregroundColor(.blue).bold()
+                            case .Punctuation:
+                                result = result + Text("\(word._word)")
+                            case .Special:
+                                result = result + Text("\(word._word)").foregroundColor(.blue)
+                        }
                     }
-                }
-                else if (mode == .EnglishQuiz) {
-                    switch(word.category) {
-                        case .Easy:
-                            result = result + Text(" \(word.word)")
-                        case .JustInCase:
-                            result = result + Text(" \(word.word)").foregroundColor(.blue)
-                        case .Hard:
-                            result = result + Text(" ")
-                            var consecutive = 0
-                            for char in word.word {
-                                if (char == " ") {
-                                    result = result + Text(" ")
-                                    consecutive = 0
-                                }
-                                else {
-                                    result = result + Text("_").foregroundColor(.blue).bold()
-                                    if (consecutive % 4 == 3) {
-                                        result = result + Text("_").foregroundColor(.blue).bold()
+                    else if (mode == .EnglishQuiz) {
+                        switch(word._category) {
+                            case .Easy:
+                                result = result + Text(" \(word._word)")
+                            case .JustInCase:
+                                result = result + Text(" \(word._word)").foregroundColor(.blue)
+                            case .Hard:
+                                result = result + Text(" ")
+                                var consecutive = 0
+                                for char in word._word {
+                                    if (char == " ") {
+                                        result = result + Text(" ")
+                                        consecutive = 0
                                     }
-                                    consecutive += 1
+                                    else {
+                                        result = result + Text("_").foregroundColor(.blue).bold()
+                                        if (consecutive % 4 == 3) {
+                                            result = result + Text("_").foregroundColor(.blue).bold()
+                                        }
+                                        consecutive += 1
+                                    }
                                 }
-                            }
-                        case .Punctuation:
-                            result = result + Text("\(word.word)")
-                        case .Special:
-                            result = result + Text("\(word.word)").foregroundColor(.blue).bold()
+                            case .Punctuation:
+                                result = result + Text("\(word._word)")
+                            case .Special:
+                                result = result + Text("\(word._word)").foregroundColor(.blue).bold()
+                        }
                     }
                 }
             }
+            else {
+                result = Text(sentence.japanese ?? "")
+            }
         }
         
-        store(sentences: sentences)
+//        InitialData.store(sentences: sentences)
 
         return AnyView(
             HStack {
@@ -122,6 +148,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(sentences: sentences)
+        ContentView()
     }
 }

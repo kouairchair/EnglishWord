@@ -8,12 +8,12 @@
 
 import Foundation
 
-class SelectSentence {
-    static func findComparison(sentence: Sentence) -> (isHidden: Bool, consumption: Int) {
+public class SelectVocabulary {
+    static func findComparison(vocabulary: Vocabulary) -> (isHidden: Bool, consumption: Int) {
         var targetDate: Date
         var consumption = 0
-        let lastAnsDate = sentence.lastAnsDate
-        switch(sentence.status) {
+        let lastAnsDate = vocabulary._lastAnswerDate
+        switch(vocabulary._status) {
             case .Forgot:
                 // 1 hour later
                 targetDate = Calendar.current.date(byAdding: .hour, value: 1, to: lastAnsDate)!
