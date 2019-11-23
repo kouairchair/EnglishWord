@@ -15,14 +15,12 @@ public class Vocabulary: NSManagedObject, Identifiable {
 //    @nonobjc public class func fetchRequest() -> NSFetchRequest<Vocabulary> {
 //        return NSFetchRequest<Vocabulary>(entityName: "Vocabulary")
 //    }
-    
     @NSManaged public var bookId: Int16
     @NSManaged public var id: Int16
     @NSManaged public var japanese: String?
-    @NSManaged public var lastAnswerDate: Date?
+    @NSManaged public var lastAnswerDate: NSDate?
     @NSManaged public var mode: Int16
     @NSManaged public var section: Int16
     @NSManaged public var status: Int16
     @NSManaged public var children: NSSet?
-
 }

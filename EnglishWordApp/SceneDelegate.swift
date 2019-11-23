@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import WatchConnectivity
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -30,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            InitialData.sentences.forEach { sentence in
 //                Vocabulary(context: context).migrateFromSentence(sentence: sentence)
 //            }
-            let contentView = ContentView().environment(\.managedObjectContext, context)
+            let contentView = ContentView().environment(\.managedObjectContext, context).environmentObject(UserData())
 
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
@@ -48,6 +49,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+//        let vocabulary = Vocabulary.toDictionaries()
+//        vocabulary.forEach { vocab in
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//                WCSession.sendMessage(vocab,
+//                replyHandler: { replyDict in
+//                    // リプライ
+//                    print("")
+//                },
+//                errorHandler: { error in
+//                    print(error.localizedDescription)}
+//                )
+//            }
+//        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

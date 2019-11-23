@@ -10,31 +10,27 @@ import SwiftUI
 
 struct ContentView: View {
 //    @State var sentences: [Vocabulary]
-    @FetchRequest(fetchRequest: Vocabulary.allVocabularyFetchReq()) var sentences: FetchedResults<Vocabulary>
+    @FetchRequest(fetchRequest: Vocabulary.allVocabularyFetchReq()) var _sentences: FetchedResults<Vocabulary>
     @State private var showingAdvancedOptions = false
-    @State private var newSentence = ""
+    @State private var displayMode = 0
+    
+    var sentences: [Vocabulary] {
+        return SelectVocabulary.filterTodaysItem(sentences: _sentences)
+    }
     
     var body: some View {
         VStack {
-            Toggle(isOn: $showingAdvancedOptions) {
-                Text("Registration Mode").padding(20)
-            }.frame(height: 30)
+//            Toggle(isOn: $showingAdvancedOptions) {
+//                Text("Registration Mode").padding(20)
+//            }.frame(height: 30)
+            Picker(selection: $displayMode, label: Text("What is your favorite color?")) {
+                Text("List").tag(0)
+                Text("Create").tag(1)
+                Text("Edit").tag(2)
+            }.pickerStyle(SegmentedPickerStyle())
 
-            if showingAdvancedOptions {
-                List {
-                    Section(header: Text("New Sentence")) {
-                        HStack {
-                            TextField("New Sentence", text: self.$newSentence)
-                            Button(action: {
-                                print("")
-                            }){
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.green)
-                                    .imageScale(.large)
-                            }
-                        }
-                    }
-                }.frame(height: 200)
+            if displayMode == 1 {
+                CreateView().frame(height: 200)
             }
             List {
                 ForEach(self.sentences, id: \.self) { sentence in
@@ -48,14 +44,14 @@ struct ContentView: View {
                                         if (mode == .Japanese) {
                                             return
                                         }
-                                        let toMode: Vocabulary.Mode = mode == .English ? .EnglishQuiz : .English
+                                        let toMode: CurrentMode = mode == .English ? .EnglishQuiz : .English
                                         self.sentences[row].editMode(toMode: toMode)
                                     }
                                 case .second():
                                     // if single tap
                                     if let row = self.sentences.firstIndex(where: {$0.id == sentence.id}) {
                                         let mode = sentence._mode
-                                        let toMode: Vocabulary.Mode = mode == .Japanese ? .EnglishQuiz : .Japanese
+                                        let toMode: CurrentMode = mode == .Japanese ? .EnglishQuiz : .Japanese
                                         self.sentences[row].editMode(toMode: toMode)
                                     }
                         }
@@ -67,12 +63,7 @@ struct ContentView: View {
     
     func delete(at offsets: IndexSet) {
         offsets.forEach { index in
-            if (sentences[index]._mode == .Japanese || sentences[index]._mode == .EnglishQuiz) {
-                sentences[index]._status = .HitOnce
-            }
-            else if (sentences[index]._mode == .English) {
-                sentences[index]._status = .Master
-            }
+            sentences[index].changeStatus(mode: sentences[index]._mode)
         }
 //        sentences.remove(atOffsets: offsets)
     }

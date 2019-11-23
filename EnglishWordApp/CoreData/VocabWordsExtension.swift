@@ -12,17 +12,9 @@ import CoreData
 
 extension VocabWords {
     
-    var _category: Category {
-        get { return Category(rawValue: Int(self.category)) ?? .Easy }
+    var _category: WordCategory {
+        get { return WordCategory(rawValue: Int(self.category)) ?? .Easy }
         set { self.category = Int16(newValue.rawValue) }
-    }
-    
-    enum Category: Int, CaseIterable, Codable, Hashable {
-        case Punctuation = -1
-        case Easy = 0
-        case JustInCase = 1
-        case Hard = 2
-        case Special = 3
     }
     
     var _word: String {

@@ -26,19 +26,17 @@ public extension Vocabulary {
     // ❇️ The @FetchRequest property wrapper in the ContentView will call this function
     static func allVocabularyFetchReq() -> NSFetchRequest<Vocabulary> {
         let request: NSFetchRequest<Vocabulary> = Vocabulary.fetchRequest() as! NSFetchRequest<Vocabulary>
+        
+//        let predicateFormat = """
+//            \(#keyPath(Vocabulary.status)) == \(StudyStatus.NeverSeen.rawValue)
+//            || \(#keyPath(Vocabulary.status)) == \(StudyStatus.Forgot.rawValue)
+//            || (\(#keyPath(Vocabulary.status)) == \(StudyStatus.HitOnce.rawValue)
+//                && \(#keyPath(Vocabulary.lastAnswerDate)) <= %@ )
+//        """
+//        request.predicate = NSPredicate(format: predicateFormat, Date.someDaysAgo(days: 7))
 
         // ❇️ The @FetchRequest property wrapper in the ContentView requires a sort descriptor
-        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-
-//        var stamina = 10
-//
-//        let _sentences = sentences.filter({ (value: Vocabulary) -> Bool in
-//            let comparison = SelectVocabulary.findComparison(vacabulary: value)
-//            if (comparison.isHidden) { return false }
-//            if (stamina <= 0) { return false }
-//            stamina -= comparison.consumption
-//            return true
-//        })
+        request.sortDescriptors = [NSSortDescriptor(key: "status", ascending: true), NSSortDescriptor(key: "id", ascending: true)]
         
         return request
     }
@@ -55,42 +53,46 @@ public extension Vocabulary {
         }
     }
     
-    func editMode(toMode: Mode) {
+    static func toDictionaries() -> [[String: Any]] {
+        var result = [[String: Any]]()
+        let keys = Array(self.entity().attributesByName.keys)
+        var vocabulary = [Vocabulary]()
+        do {
+            vocabulary = try Constants.context.fetch(self.allVocabularyFetchReq())
+        } catch {
+            fatalError("error")
+        }
+        vocabulary.forEach { vocab in
+            result.append(vocab.dictionaryWithValues(forKeys: keys))
+        }
+        return result
+    }
+    
+    func editMode(toMode: CurrentMode) {
         _mode = toMode
         saveContext()
     }
     
-    var _lastAnswerDate: Date {
+    var _lastAnswerDate: NSDate {
         get {
-            return lastAnswerDate ?? Date(timeIntervalSince1970: TimeInterval(0))
+            return lastAnswerDate ?? NSDate(timeIntervalSince1970: TimeInterval(0))
         }
     }
     
-    var _status: Status {
-        get { return Status(rawValue: Int(self.status)) ?? .NeverSeen }
-        set { self.status = Int16(newValue.rawValue) }
+    var _status: StudyStatus {
+        get { return StudyStatus(rawValue: Int(self.status)) ?? .NeverSeen }
+        set {
+            self.status = Int16(newValue.rawValue)
+            saveContext()
+        }
     }
     
-    enum Status: Int, CaseIterable, Codable, Hashable {
-           case Forgot = -1 // 1回目正解、2回目不正解または1回目不正解（1時間後に再出題対象）
-           case NeverSeen = 0 // 未出題（必ず出題対象）
-           case HitOnce = 1 // 1回のみ出題で正解（7日後に再出題対象）
-           case Master = 2 // 2回連続正解または不正解の後に5回連続正解（3回目の出題はなし）
-           case HitOnceAfterFailed = 3 // 不正解の後に1回正解（1日後に再出題対象）
-           case HitTwiceAfterFailed = 4 // 不正解の後に2回連続正解（3日後に再出題対象）
-           case HitThreeAfterFailed = 5 // 不正解の後に3回連続正解（7日後に再出題対象）
-           case HitFourAfterFailed = 6 // 不正解の後に4回連続正解（30日後に再出題対象）
-       }
-    
-    var _mode: Mode {
-        get { return Mode(rawValue: Int(self.mode)) ?? .Japanese }
-        set { self.mode = Int16(newValue.rawValue) }
-    }
-    
-    enum Mode: Int, CaseIterable, Codable, Hashable {
-        case Japanese = 0
-        case English = 1
-        case EnglishQuiz = 2
+    var _mode: CurrentMode {
+        get { return CurrentMode(rawValue: Int(self.mode)) ?? .Japanese }
+        set {
+            self.mode = Int16(newValue.rawValue)
+            saveContext()
+        }
     }
     
 // -> このメソッドは不要？
@@ -130,6 +132,34 @@ public extension Vocabulary {
         }
     }
     
+    func changeStatus(mode: CurrentMode) {
+        switch(_status) {
+            case .Forgot:
+                _status = .HitOnceAfterFailed
+            case .HitOnce:
+                _status = .Master
+            case .HitOnceAfterFailed:
+                _status = .HitTwiceAfterFailed
+            case .HitTwiceAfterFailed:
+                _status = .HitThreeAfterFailed
+            case .HitThreeAfterFailed:
+                _status = .HitFourAfterFailed
+            case .HitFourAfterFailed:
+                _status = .Master
+            case .NeverSeen:
+                _status = .HitOnce
+            case .Master:
+                _status = .Master
+        }
+//        if (mode == .Japanese || mode == .EnglishQuiz) {
+//            _status = .HitFourAfterFailed
+//        }
+//        else if (mode == .English) {
+//            _status = .Master
+//        }
+        saveContext()
+    }
+    
     func saveContext() {
         do {
             try Constants.context.save()
@@ -142,10 +172,10 @@ public extension Vocabulary {
         self.id = Int16(sentence.id)
         self.bookId = Int16(sentence.book)
         self.japanese = sentence.japanese
-        self.lastAnswerDate = sentence.lastAnsDate
         self.mode = Int16(sentence.mode?.rawValue ?? 0)
         self.section = Int16(sentence.section)
         self.status = Int16(sentence.status.rawValue)
+        self.lastAnswerDate = sentence.lastAnsDate
         
         do {
             try Constants.context.save()

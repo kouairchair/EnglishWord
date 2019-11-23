@@ -24,4 +24,11 @@ public struct Constants {
             _context = value
         }
     }
+    static var dateFormatter: DateFormatter {
+        get {
+            let format = DateFormatter()
+            format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            return format
+        }
+    }
 }
