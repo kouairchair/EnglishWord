@@ -132,7 +132,7 @@ public extension Vocabulary {
         }
     }
     
-    func changeStatus(mode: CurrentMode) {
+    func changeStatusWhenCorrect() {
         switch(_status) {
             case .Forgot:
                 _status = .HitOnceAfterFailed
@@ -151,12 +151,16 @@ public extension Vocabulary {
             case .Master:
                 _status = .Master
         }
-//        if (mode == .Japanese || mode == .EnglishQuiz) {
-//            _status = .HitFourAfterFailed
-//        }
-//        else if (mode == .English) {
-//            _status = .Master
-//        }
+        saveContext()
+    }
+    
+    func changeStatusWhenWrong() {
+        _status = .Forgot
+        saveContext()
+    }
+    
+    func updateLastAnswerDate() {
+
         saveContext()
     }
     
