@@ -63,7 +63,7 @@ struct ContentView: View {
     
     func delete(at offsets: IndexSet) {
         offsets.forEach { index in
-            sentences[index].changeStatus(mode: sentences[index]._mode)
+            sentences[index].changeStatusWhenCorrect()
         }
 //        sentences.remove(atOffsets: offsets)
     }
