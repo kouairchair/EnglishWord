@@ -77,6 +77,9 @@ public extension Vocabulary {
         get {
             return lastAnswerDate ?? NSDate(timeIntervalSince1970: TimeInterval(0))
         }
+        set(value) {
+            lastAnswerDate = value ?? Date(timeIntervalSince1970: TimeInterval(0)))
+        }
     }
     
     var _status: StudyStatus {
@@ -160,7 +163,8 @@ public extension Vocabulary {
     }
     
     func updateLastAnswerDate() {
-
+        _lastAnswerDate = NSDate(timeInterval: TimeInterval(0), 
+           since: Constants.dateFormatter.date(from: Date())
         saveContext()
     }
     
