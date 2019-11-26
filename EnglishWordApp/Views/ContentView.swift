@@ -56,16 +56,24 @@ struct ContentView: View {
                                     }
                         }
                     })
-                }.onDelete(perform: delete)
+                }.onDelete(perform: correct)
             }
         }
     }
     
-    func delete(at offsets: IndexSet) {
+    func correct(at offsets: IndexSet) {
         offsets.forEach { index in
             sentences[index].changeStatusWhenCorrect()
+            sentences[index].updateLastAnswerDate()
         }
 //        sentences.remove(atOffsets: offsets)
+    }
+    
+    func wrong(offsets: IndexSet) {
+        offsets.forEach { index in
+            sentences[index].changeStatusWhenWrong()
+            sentences[index].updateLastAnswerDate()
+        }
     }
     
     func sentenceView(sentence: Vocabulary) -> AnyView? {
